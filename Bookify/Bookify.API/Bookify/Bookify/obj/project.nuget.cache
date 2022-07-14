@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "sjKaNpfLte9EEEMqQOD4aoV+xJ+HQSsXjRwCl4MXf6L7P4KTJls0m7MD7SuDUZ9mov0md9jP9LVon50oBPuJbw==",
+  "dgSpecHash": "EOFPq/bAhPsyOJ4wWdwveoaEhDMnZ8Nzx+2mxOWbm7cio3i240OQUR34bVgE660cC75NjF4FdVhaB1g0dlzxng==",
   "success": true,
-  "projectFilePath": "C:\\Users\\osama\\Documents\\Bookify\\Bookify.API\\Bookify\\Bookify\\Bookify.csproj",
+  "projectFilePath": "C:\\Users\\osama\\Documents\\Github\\Initial_Projects\\Bookify\\Bookify.API\\Bookify\\Bookify\\Bookify.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\osama\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\osama\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",

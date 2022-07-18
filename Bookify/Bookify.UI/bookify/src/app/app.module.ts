@@ -56,6 +56,8 @@ import { BooksTableComponent } from './components/cards/card-books/books-table/b
 import { AdminBookDropdownComponent } from './components/dropdowns/admin_book_dropdown/admin-book-dropdown/admin-book-dropdown.component';
 import { AddBookCardComponent } from './components/cards/card-books/add-book-card/add-book-card.component';
 import { AddBookCategoryComponent } from './components/cards/card-books/add-book-category/add-book-category.component';
+import { BookshopsTableComponent } from './components/cards/card-bookshops/bookshops-table/bookshops-table.component';
+import { AdminBookshopDropdownComponent } from './components/dropdowns/admin-bookshop-dropdown/admin-bookshop-dropdown.component';
 
 @NgModule({
   declarations: [
@@ -102,6 +104,8 @@ import { AddBookCategoryComponent } from './components/cards/card-books/add-book
     AdminBookDropdownComponent,
     AddBookCardComponent,
     AddBookCategoryComponent,
+    BookshopsTableComponent,
+    AdminBookshopDropdownComponent,
   ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [],

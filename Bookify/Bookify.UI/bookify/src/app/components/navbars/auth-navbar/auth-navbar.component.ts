@@ -5,13 +5,6 @@ import { Component, OnInit } from "@angular/core";
   templateUrl: "./auth-navbar.component.html",
 })
 export class AuthNavbarComponent implements OnInit {
-  navbarOpen = false;
-
   constructor() {}
-
   ngOnInit(): void {}
-
-  setNavbarOpen() {
-    this.navbarOpen = !this.navbarOpen;
-  }
 }

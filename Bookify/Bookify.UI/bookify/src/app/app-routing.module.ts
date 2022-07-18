@@ -4,6 +4,11 @@ import { Routes, RouterModule } from "@angular/router";
 // layouts
 import { AdminComponent } from "./layouts/admin/admin.component";
 import { AuthComponent } from "./layouts/auth/auth.component";
+import { AddBookComponent } from "./views/admin/books/add-book/add-book.component";
+import { ViewAllBooksComponent } from "./views/admin/books/view-all-books/view-all-books.component";
+import { ViewAllBookshopsComponent } from "./views/admin/bookshops/view-all-bookshops/view-all-bookshops.component";
+import { AddCategoryComponent } from "./views/admin/category/add-category/add-category.component";
+import { ViewAllCustomersComponent } from "./views/admin/customers/view-all-customers/view-all-customers.component";
 
 // admin views
 import { DashboardComponent } from "./views/admin/dashboard/dashboard.component";
@@ -30,6 +35,11 @@ const routes: Routes = [
       { path: "settings", component: SettingsComponent },
       { path: "tables", component: TablesComponent },
       { path: "maps", component: MapsComponent },
+      { path: "add_category", component: AddCategoryComponent},
+      { path: "bookshops", component: ViewAllBookshopsComponent},
+      { path: "books", component: ViewAllBooksComponent},
+      { path: "add_book", component: AddBookComponent},
+      { path: "customers", component: ViewAllCustomersComponent},
       { path: "", redirectTo: "dashboard", pathMatch: "full" },
     ],
   },

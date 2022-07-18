@@ -47,6 +47,11 @@ import { PagesDropdownComponent } from "./components/dropdowns/pages-dropdown/pa
 import { NotificationDropdownComponent } from "./components/dropdowns/notification-dropdown/notification-dropdown.component";
 import { SidebarComponent } from "./components/sidebar/sidebar.component";
 import { UserDropdownComponent } from "./components/dropdowns/user-dropdown/user-dropdown.component";
+import { AddCategoryComponent } from './views/admin/category/add-category/add-category.component';
+import { ViewAllBookshopsComponent } from './views/admin/bookshops/view-all-bookshops/view-all-bookshops.component';
+import { ViewAllBooksComponent } from './views/admin/books/view-all-books/view-all-books.component';
+import { AddBookComponent } from './views/admin/books/add-book/add-book.component';
+import { ViewAllCustomersComponent } from './views/admin/customers/view-all-customers/view-all-customers.component';
 
 @NgModule({
   declarations: [
@@ -84,6 +89,11 @@ import { UserDropdownComponent } from "./components/dropdowns/user-dropdown/user
     IndexComponent,
     LandingComponent,
     ProfileComponent,
+    AddCategoryComponent,
+    ViewAllBookshopsComponent,
+    ViewAllBooksComponent,
+    AddBookComponent,
+    ViewAllCustomersComponent,
   ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [],

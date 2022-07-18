@@ -54,6 +54,7 @@ import { AddBookComponent } from './views/admin/books/add-book/add-book.componen
 import { ViewAllCustomersComponent } from './views/admin/customers/view-all-customers/view-all-customers.component';
 import { BooksTableComponent } from './components/cards/card-books/books-table/books-table.component';
 import { AdminBookDropdownComponent } from './components/dropdowns/admin_book_dropdown/admin-book-dropdown/admin-book-dropdown.component';
+import { AddBookCardComponent } from './components/cards/card-books/add-book-card/add-book-card.component';
 
 @NgModule({
   declarations: [
@@ -98,6 +99,7 @@ import { AdminBookDropdownComponent } from './components/dropdowns/admin_book_dr
     ViewAllCustomersComponent,
     BooksTableComponent,
     AdminBookDropdownComponent,
+    AddBookCardComponent,
   ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [],

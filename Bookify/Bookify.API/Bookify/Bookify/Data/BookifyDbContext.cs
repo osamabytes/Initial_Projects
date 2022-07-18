@@ -12,7 +12,7 @@ namespace Bookify.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>()
+            /*modelBuilder.Entity<User>()
                 .HasOne<User_Type>(u => u.User_Type)
                 .WithOne(ut => ut.User)
                 .HasForeignKey<User_Type>(ut => ut.UserId);
@@ -80,7 +80,7 @@ namespace Bookify.Data
             modelBuilder.Entity<Book_Category>()
                 .HasOne(c => c.Category)
                 .WithMany(bc => bc.Book_Categories)
-                .HasForeignKey(c => c.CategoryId);
+                .HasForeignKey(c => c.CategoryId);*/
 
         }
 

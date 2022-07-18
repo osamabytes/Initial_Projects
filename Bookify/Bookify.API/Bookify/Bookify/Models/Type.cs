@@ -4,13 +4,13 @@ namespace Bookify.Models
 {
     public class Type
     {
+        [Required]
         public Guid id { get; set; }
+        [Required]
         public string? Name { get; set; }
-        [Timestamp]
-        public byte[]? CreatedAt { get; set; }
 
         // navigation properties
-        public List<User_Type>? User_Types { get; set; }
+        /*public List<User_Type>? User_Types { get; set; }*/
 
     }
 }

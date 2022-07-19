@@ -82,6 +82,8 @@ namespace Bookify.Data
                 .WithMany(bc => bc.Book_Categories)
                 .HasForeignKey(c => c.CategoryId);*/
 
+            
+
         }
 
         public DbSet<Book> Books { get; set; }

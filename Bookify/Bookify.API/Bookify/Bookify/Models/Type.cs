@@ -5,7 +5,7 @@ namespace Bookify.Models
     public class Type
     {
         [Required]
-        public Guid id { get; set; }
+        public Guid Id { get; set; }
         [Required]
         public string? Name { get; set; }
 

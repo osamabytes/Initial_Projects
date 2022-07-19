@@ -1,25 +1,21 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace Bookify.Models
 {
-    public class User
+    public class User: IdentityUser<Guid>
     {
-        [Required]
-        public Guid Id { get; set; }
-        [Required]
-        public string? Name { get; set; }
-        [Required]
-        [EmailAddress]
-        public string? Email { get; set; }
-        [Required]
-        public string? Password { get; set; }
+        [Key]
+        public override Guid Id { get; set; }
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
 
         // navigation properties
         /*public User_Type? User_Type { get; set; }
 
         public User_Bookshop? User_Bookshop { get; set; }
 
-        public List<Review>? reviews { get; set; } */
+        public List<Review>? reviews { get; set; }*/
 
     }
 }

@@ -15,5 +15,8 @@ namespace Bookify.Dto
         public string? Password { get; set; }
         [Compare("Password", ErrorMessage = "The Password and Confirmation Password do not match")]
         public string? ConfirmPassword { get; set; }
+
+        [Required(ErrorMessage = "Please Select the User Role")]
+        public Guid? TypeId { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Bookify.Data;
+using System.ComponentModel.DataAnnotations;
 
 namespace Bookify.Models
 {
@@ -13,5 +14,14 @@ namespace Bookify.Models
         /*public User_Bookshop? User_Bookshop { get; set; }
 
         public List<Book_Bookshop>? Book_Bookshops { get; set; }*/
+
+        // Db Operations
+        public async Task Save(BookifyDbContext bookifyDbContext)
+        {
+            Id = Guid.NewGuid();
+
+            await bookifyDbContext.Bookshops.AddAsync(this);
+            await bookifyDbContext.SaveChangesAsync();
+        }
     }
 }

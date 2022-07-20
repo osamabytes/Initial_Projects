@@ -1,25 +1,30 @@
 ﻿using AutoMapper;
+using Bookify.Data;
 using Bookify.Dto;
 using Bookify.JwtBearer;
 using Bookify.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace Bookify.Controllers
 {
-    [ApiController ]
+    [ApiController]
+    [AllowAnnonymous]
     [Route("api/users")]
     public class UserController : Controller
     {
         private readonly UserManager<User> _userManager;
+        private readonly BookifyDbContext _bookifyDbContext;
         private readonly IMapper _mapper;
         private readonly JwtHandler _jwtHandler;
 
-        public UserController(UserManager<User> userManager, IMapper mapper, JwtHandler jwtHandler)
+        public UserController(UserManager<User> userManager, BookifyDbContext bookifyDbContext, IMapper mapper, JwtHandler jwtHandler)
         {
             _userManager=userManager;
-            _mapper=mapper;
+            _bookifyDbContext=bookifyDbContext;
+            _mapper =mapper;
             _jwtHandler = jwtHandler;
         }
 
@@ -41,22 +46,37 @@ namespace Bookify.Controllers
                 return BadRequest(new RegisterResponseDto { Errors = errors, IsSuccessfulRegister = false });
             }
 
-            return Ok(new RegisterResponseDto { IsSuccessfulRegister = true});
+            // Save UserType
+
+            // Get Type for the user
+            Models.Type type = Models.Type.GetById(userRegistrationDto.TypeId, _bookifyDbContext);
+
+            User_Type userType = new User_Type();
+            userType.UserId = user.Id;
+            userType.TypeId = type.Id;
+
+            await userType.Save(_bookifyDbContext);
+
+
+            return Ok(new RegisterResponseDto { IsSuccessfulRegister = true });
 
         }
 
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody] UserForAuthenticationDto userForAuthenticationDto)
         {
+            if (userForAuthenticationDto == null || !ModelState.IsValid)
+                return BadRequest();
+
             // check if the user exists in the system
             var user = await _userManager.FindByNameAsync(userForAuthenticationDto.Email);
 
-            if(user == null)
-                return Unauthorized(new AuthenticationResponseDto { IsAuthSuccessful = false, ErrorMessage = "Invalid User SignIn"});
+            if (user == null)
+                return Unauthorized(new AuthenticationResponseDto { IsAuthSuccessful = false, ErrorMessage = "Invalid User SignIn" });
 
             // authorize user with email and password
             var authUser = await _userManager.CheckPasswordAsync(user, userForAuthenticationDto.Password);
-            if(!authUser)
+            if (!authUser)
             {
                 return Unauthorized(new AuthenticationResponseDto { IsAuthSuccessful = false, ErrorMessage = "Invalid Authentication" });
             }

@@ -5,4 +5,5 @@ export interface UserRegistrationDto{
     Email: string,
     Password: string,
     ConfirmPassword: string,
+    TypeId: string,
 }

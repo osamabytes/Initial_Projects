@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Bookify.Dto;
+using Bookify.JwtBearer;
 using Bookify.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Bookify.Controllers
 {
@@ -12,11 +14,13 @@ namespace Bookify.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
+        private readonly JwtHandler _jwtHandler;
 
-        public UserController(UserManager<User> userManager, IMapper mapper)
+        public UserController(UserManager<User> userManager, IMapper mapper, JwtHandler jwtHandler)
         {
             _userManager=userManager;
             _mapper=mapper;
+            _jwtHandler = jwtHandler;
         }
 
         [HttpPost("Register")]
@@ -39,6 +43,30 @@ namespace Bookify.Controllers
 
             return Ok(new RegisterResponseDto { IsSuccessfulRegister = true});
 
+        }
+
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login([FromBody] UserForAuthenticationDto userForAuthenticationDto)
+        {
+            // check if the user exists in the system
+            var user = await _userManager.FindByNameAsync(userForAuthenticationDto.Email);
+
+            if(user == null)
+                return Unauthorized(new AuthenticationResponseDto { IsAuthSuccessful = false, ErrorMessage = "Invalid User SignIn"});
+
+            // authorize user with email and password
+            var authUser = await _userManager.CheckPasswordAsync(user, userForAuthenticationDto.Password);
+            if(!authUser)
+            {
+                return Unauthorized(new AuthenticationResponseDto { IsAuthSuccessful = false, ErrorMessage = "Invalid Authentication" });
+            }
+
+            var signingCredentials = _jwtHandler.GetSigningCredentials();
+            var claims = _jwtHandler.GetClaims(user);
+            var tokenOptions = _jwtHandler.GenerateTokenOptions(signingCredentials, claims);
+            var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+
+            return Ok(new AuthenticationResponseDto { IsAuthSuccessful = true, Token = token });
         }
     }
 }

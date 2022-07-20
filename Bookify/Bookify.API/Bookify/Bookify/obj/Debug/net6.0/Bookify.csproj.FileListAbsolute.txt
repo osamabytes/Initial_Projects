@@ -66,3 +66,4 @@ C:\Users\osama\Documents\Github\Initial_Projects\Bookify\Bookify.API\Bookify\Boo
 C:\Users\osama\Documents\Github\Initial_Projects\Bookify\Bookify.API\Bookify\Bookify\bin\Debug\net6.0\Microsoft.Extensions.Identity.Core.dll
 C:\Users\osama\Documents\Github\Initial_Projects\Bookify\Bookify.API\Bookify\Bookify\bin\Debug\net6.0\Microsoft.Extensions.Identity.Stores.dll
 C:\Users\osama\Documents\Github\Initial_Projects\Bookify\Bookify.API\Bookify\Bookify\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\osama\Documents\Github\Initial_Projects\Bookify\Bookify.API\Bookify\Bookify\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

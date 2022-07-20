@@ -25,7 +25,7 @@ namespace Bookify.JwtBearer
             return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
         }
 
-        public List<Claim> GetClaims(IdentityUser user)
+        public List<Claim> GetClaims(IdentityUser<Guid> user)
         {
             var claims = new List<Claim>
             {

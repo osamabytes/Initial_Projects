@@ -1,5 +1,6 @@
 using AutoMapper;
 using Bookify.Data;
+using Bookify.JwtBearer;
 using Bookify.Mapper;
 using Bookify.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -55,6 +56,8 @@ builder.Services.AddAuthentication(option =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.GetSection("securitykey").Value))
     };
 });
+
+builder.Services.AddScoped<JwtHandler>();
 
 var app = builder.Build();
 

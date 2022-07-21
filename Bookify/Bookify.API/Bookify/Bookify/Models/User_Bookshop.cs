@@ -13,6 +13,15 @@ namespace Bookify.Models
         public Bookshop? Bookshop { get; set; }
 
         // Db Operations
+        public static User_Bookshop GetByUserId(Guid UserId, BookifyDbContext bookifyDbContext)
+        {
+            var ub = bookifyDbContext.User_Bookshops.FirstOrDefault(ub => ub.UserId == UserId);
+
+            if (ub == null)
+                return null;
+
+            return ub;
+        }
         public async Task Save(BookifyDbContext bookifyDbContext)
         {
             Id = Guid.NewGuid();

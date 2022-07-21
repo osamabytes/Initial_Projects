@@ -1,4 +1,6 @@
-﻿namespace Bookify.Models
+﻿using Bookify.Data;
+
+namespace Bookify.Models
 {
     public class Book_Category
     {
@@ -9,5 +11,14 @@
 
         public Guid BookId { get; set; }
         public Book? Book { get; set; }
+
+        // DB Operations
+        public async Task Save(BookifyDbContext bookifyDbContext)
+        {
+            Id = Guid.NewGuid();
+
+            await bookifyDbContext.Book_Categories.AddAsync(this);
+            await bookifyDbContext.SaveChangesAsync();
+        }
     }
 }

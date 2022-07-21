@@ -1,4 +1,6 @@
-﻿using Bookify.Data;
+﻿using Bookify.Constants;
+using Bookify.Data;
+using Bookify.Dto;
 using Bookify.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -31,18 +33,29 @@ namespace Bookify.Controllers
 
             var user = await _UserManager.FindByEmailAsync(useremail.Value);
 
-            Bookshop bs = new Bookshop();
-            bs.Name = bookshop.Name;
+            User_Type ut = User_Type.GetUserTypeByUserId(user.Id, _BookifyDbContext);
 
-            await bs.Save(_BookifyDbContext);
+            if (ut.TypeId == AppConfig.AdminGuid)
+            {
+                Bookshop bs = new Bookshop();
+                bs.Name = bookshop.Name;
 
-            User_Bookshop user_Bookshop = new User_Bookshop();
-            user_Bookshop.UserId = user.Id;
-            user_Bookshop.BookshopId = bs.Id;
+                await bs.Save(_BookifyDbContext);
 
-            await user_Bookshop.Save(_BookifyDbContext);
+                User_Bookshop user_Bookshop = new User_Bookshop();
+                user_Bookshop.UserId = user.Id;
+                user_Bookshop.BookshopId = bs.Id;
 
-            return Ok(bs);
+                await user_Bookshop.Save(_BookifyDbContext);
+
+                return Ok(bs);
+            }
+
+            return Unauthorized(new GeneralAuthResponseDto
+            {
+                IsAllowed = false,
+                Errors = new List<string> { "User not allowed for this feature" }
+            });
         }
     }
 }

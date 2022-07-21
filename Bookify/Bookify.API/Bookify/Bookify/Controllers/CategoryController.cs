@@ -35,8 +35,9 @@ namespace Bookify.Controllers
             // Get User type
             User_Type ut = User_Type.GetUserTypeByUserId(user.Id, _bookifyDbContext);
 
+
             // check the type of the user is Super Admin
-            if(ut.Type?.Id.CompareTo(AppConfig.SuperAdminGuid) == 0)
+            if(ut.TypeId == AppConfig.SuperAdminGuid)
             {
                 Category c = new Category();
                 c.Name = category.Name;

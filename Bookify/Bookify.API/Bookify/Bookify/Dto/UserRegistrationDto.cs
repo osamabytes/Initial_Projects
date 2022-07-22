@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Bookify.Validations;
+using System.ComponentModel.DataAnnotations;
 
 namespace Bookify.Dto
 {
@@ -16,6 +17,7 @@ namespace Bookify.Dto
         [Compare("Password", ErrorMessage = "The Password and Confirmation Password do not match")]
         public string? ConfirmPassword { get; set; }
 
+        [NotEmptyGuid("Please Select User Mode")]
         [Required(ErrorMessage = "Please Select the User Role")]
         public Guid? TypeId { get; set; }
     }

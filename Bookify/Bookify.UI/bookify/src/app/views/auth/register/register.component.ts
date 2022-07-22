@@ -61,21 +61,37 @@ export class RegisterComponent implements OnInit {
           });
         }
         
-        // set the errors for all
-        if(errors.hasOwnProperty("FirstName")){
-          this.firstNameError = errors.FirstName[0];
-        }
-        if(errors.hasOwnProperty("Email")){
-          this.emailError = errors.Email[0];
-        }
-        if(errors.hasOwnProperty("Password")){
-          this.passwordError = errors.Password[0];
-        }
-        if(errors.hasOwnProperty("ConfirmPassword")){
-          this.confirmPasswordError = errors.ConfirmPassword[0];
-        }
-        if(errors.hasOwnProperty("TypeId")){
-          this.typeIdError = errors.TypeId[0];
+        if(errors !== undefined){
+          // set the errors for all
+          if(errors.hasOwnProperty("FirstName")){
+            this.firstNameError = errors.FirstName[0];
+          }else{
+            this.firstNameError = "";
+          }
+
+          if(errors.hasOwnProperty("Email")){
+            this.emailError = errors.Email[0];
+          }else{
+            this.emailError = "";
+          }
+
+          if(errors.hasOwnProperty("Password")){
+            this.passwordError = errors.Password[0];
+          }else{
+            this.passwordError = "";
+          }
+
+          if(errors.hasOwnProperty("ConfirmPassword")){
+            this.confirmPasswordError = errors.ConfirmPassword[0];
+          }else{
+            this.confirmPasswordError = "";
+          }
+
+          if(errors.hasOwnProperty("TypeId")){
+            this.typeIdError = errors.TypeId[0];
+          }else{
+            this.typeIdError = "";
+          }
         }
       }
     })

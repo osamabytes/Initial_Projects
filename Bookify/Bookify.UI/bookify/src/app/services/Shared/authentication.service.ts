@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AuthenticationResponseDto } from 'src/app/interfaces/AuthenticationResponseDto.interface';
 import { RegistrationResponseDto } from 'src/app/interfaces/RegistrationResponseDto.interface';
+import { UserForAuthenticationDto } from 'src/app/interfaces/UserForAuthenticationDto.interface';
 import { UserRegistrationDto } from 'src/app/interfaces/UserRegistrationDto.interface';
 import { environment } from 'src/environments/environment';
 
@@ -15,5 +17,9 @@ export class AuthenticationService {
 
   public registerUser(route: string, body: UserRegistrationDto){
     return this.http.post<RegistrationResponseDto> (this.baseApiUrl + route, body);
+  }
+
+  public loginUser(route: string, body: UserForAuthenticationDto){
+    return this.http.post<AuthenticationResponseDto> (this.baseApiUrl + route, body);
   }
 }

@@ -10,7 +10,7 @@ namespace Bookify.Dto
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         [Required(ErrorMessage = "Email is Required")]
-        [DataType(DataType.EmailAddress)]
+        [EmailAddress(ErrorMessage = "Please Enter Valid Email Address")]
         public string? Email { get; set; }
         [Required(ErrorMessage = "Password is Required")]
         public string? Password { get; set; }

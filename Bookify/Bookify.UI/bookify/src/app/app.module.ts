@@ -1,4 +1,4 @@
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 
@@ -65,6 +65,7 @@ import { AdminBookshopDropdownComponent } from './components/dropdowns/admin-boo
 import { CustomersTableComponent } from './components/cards/card-customers/customers-table/customers-table.component';
 import { AdminCustomerDropdownComponent } from './components/dropdowns/admin-customer-dropdown/admin-customer-dropdown.component';
 import { FormsModule } from "@angular/forms";
+import { InterceptorService } from "./services/Shared/Network/interceptor.service";
 
 @NgModule({
   declarations: [
@@ -117,7 +118,13 @@ import { FormsModule } from "@angular/forms";
     AdminCustomerDropdownComponent,
   ],
   imports: [BrowserModule, BrowserAnimationsModule, AppRoutingModule, HttpClientModule, FormsModule, ToastrModule.forRoot()],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

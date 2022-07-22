@@ -1,8 +1,12 @@
+import { HttpClientModule } from "@angular/common/http";
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
+
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // layouts
 import { AdminComponent } from "./layouts/admin/admin.component";
@@ -60,6 +64,7 @@ import { BookshopsTableComponent } from './components/cards/card-bookshops/books
 import { AdminBookshopDropdownComponent } from './components/dropdowns/admin-bookshop-dropdown/admin-bookshop-dropdown.component';
 import { CustomersTableComponent } from './components/cards/card-customers/customers-table/customers-table.component';
 import { AdminCustomerDropdownComponent } from './components/dropdowns/admin-customer-dropdown/admin-customer-dropdown.component';
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -111,7 +116,7 @@ import { AdminCustomerDropdownComponent } from './components/dropdowns/admin-cus
     CustomersTableComponent,
     AdminCustomerDropdownComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule],
+  imports: [BrowserModule, BrowserAnimationsModule, AppRoutingModule, HttpClientModule, FormsModule, ToastrModule.forRoot()],
   providers: [],
   bootstrap: [AppComponent],
 })

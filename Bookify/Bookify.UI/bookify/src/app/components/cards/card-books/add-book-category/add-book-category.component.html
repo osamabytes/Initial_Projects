@@ -7,7 +7,7 @@
     </div>
   </div>
   <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
-    <form>
+    <form #categoryform="ngForm" (ngSubmit)="AddCategory(categoryform)">
       <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
         General
       </h6>
@@ -25,6 +25,9 @@
               type="text"
               class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
               placeholder="Enter Category Name"
+              id="category_name"
+              name="category_name"
+              [(ngModel)]="category.Name"
             />
           </div>
         </div>
@@ -42,6 +45,9 @@
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 rows="4"
                 placeholder="Describe the Category"
+                id="category_describe"
+                name="category_describe"
+                [(ngModel)]="category.Description"
               ></textarea>
             </div>
         </div>
@@ -69,26 +75,36 @@
                 class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                 Name
               </th>
+              <th
+                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                Description
+              </th>
           </thead>
           <tbody>
-            <tr>
+            <tr *ngFor="let category of categories">
               <th
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center"
               >
                 <span
                   class="ml-3 font-bold"
                 >
-                  00000000-0000-0000-0000-000000000000
+                  {{category.id}}
                 </span>
               </th>
               <td
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
               >
-                Test
+                {{category.name}}
+              </td>
+              <td
+                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+              >
+                {{category.description}}
               </td>
             </tr>
           </tbody>
         </table>
+        <h4 *ngIf="!categories || categories.length <=0 ">No Categories Created yet.</h4>
       </div>
     </form>
   </div>

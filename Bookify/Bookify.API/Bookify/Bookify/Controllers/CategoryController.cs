@@ -22,6 +22,31 @@ namespace Bookify.Controllers
             _userManager = userManager;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAllCategories()
+        {
+            var useremail = User.Claims.FirstOrDefault();
+
+            if (useremail == null)
+                return NotFound();
+
+            var user = await _userManager.FindByEmailAsync(useremail.Value);
+
+            // Get User Type
+            User_Type ut = User_Type.GetUserTypeByUserId(user.Id, _bookifyDbContext);
+
+            if(ut.TypeId == AppConfig.SuperAdminGuid)
+            {
+                List<Category> categories = Category.GetAllCategories(_bookifyDbContext);
+                return Ok(categories);
+            }
+
+            return Unauthorized(new GeneralAuthResponseDto { 
+                IsAllowed = false,
+                Errors = new List<string>() { "User not allowed for this feature" }
+            });
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddCategory([FromBody] Category category)
         {

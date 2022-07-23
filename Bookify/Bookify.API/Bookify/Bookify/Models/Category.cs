@@ -15,6 +15,11 @@ namespace Bookify.Models
         /*public List<Book_Category>? Book_Categories { get; set; }*/
 
         // Db Operations
+        public static List<Category> GetAllCategories(BookifyDbContext bookifyDbContext)
+        {
+            var categories = bookifyDbContext.Categories.ToList();
+            return categories;
+        }
         public async Task Save(BookifyDbContext bookifyDbContext)
         {
             Id = Guid.NewGuid();

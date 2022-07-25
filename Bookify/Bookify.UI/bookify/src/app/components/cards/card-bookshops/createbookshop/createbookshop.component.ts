@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BookshopsService } from 'src/app/services/bookshops.service';
 import {ToastrService} from 'ngx-toastr';
-import { NgForm } from '@angular/forms';
 import { BookShop } from 'src/app/models/bookshop.model';
-import { UserBookShop } from 'src/app/models/User_BookShop.model';
 
 @Component({
   selector: 'app-createbookshop',

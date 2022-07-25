@@ -8,6 +8,8 @@ import { AppComponent } from "./app.component";
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { NgHttpLoaderModule } from 'ng-http-loader';
+
 // layouts
 import { AdminComponent } from "./layouts/admin/admin.component";
 import { AuthComponent } from "./layouts/auth/auth.component";
@@ -117,7 +119,8 @@ import { InterceptorService } from "./services/Shared/Network/interceptor.servic
     CustomersTableComponent,
     AdminCustomerDropdownComponent,
   ],
-  imports: [BrowserModule, BrowserAnimationsModule, AppRoutingModule, HttpClientModule, FormsModule, ToastrModule.forRoot()],
+  imports: [BrowserModule, BrowserAnimationsModule, AppRoutingModule, HttpClientModule, FormsModule, ToastrModule.forRoot(), 
+            NgHttpLoaderModule.forRoot()],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

@@ -88,5 +88,30 @@ namespace Bookify.Controllers
 
             return Ok(new AuthenticationResponseDto { IsAuthSuccessful = true, Token = token });
         }
+
+        [HttpGet("GetUserType")]
+        public async Task<IActionResult> GetUserType()
+        {
+            var useremail = User.Claims.FirstOrDefault();
+
+            if (useremail == null)
+                return Unauthorized(
+                    new GeneralAuthResponseDto
+                    {
+                        IsAllowed = false,
+                        Errors = new List<string> { "User Not Logged In" }
+                    }
+                );
+
+            var user = await _userManager.FindByEmailAsync(useremail.Value);
+
+            if (user == null)
+                return NotFound();
+
+            User_Type ut = User_Type.GetUserTypeByUserId(user.Id, _bookifyDbContext);
+            Models.Type type = Models.Type.GetById(ut.TypeId, _bookifyDbContext);
+
+            return Ok(type);
+        }
     }
 }

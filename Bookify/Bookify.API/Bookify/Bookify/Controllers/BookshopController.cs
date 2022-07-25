@@ -5,7 +5,6 @@ using Bookify.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace Bookify.Controllers
 {
@@ -21,6 +20,46 @@ namespace Bookify.Controllers
         {
             _BookifyDbContext = bookifyDbContext;
             _UserManager = userManager;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AllBookShops()
+        {
+            var useremail = User.Claims.FirstOrDefault();
+            if (useremail == null)
+                return NotFound();
+
+            var user = await _UserManager.FindByEmailAsync(useremail.Value);
+
+            if (user == null)
+                return Unauthorized(new GeneralAuthResponseDto
+                {
+                    IsAllowed = false,
+                    Errors = new List<string> { "User Not Logged In" }
+                });
+
+            User_Type ut = User_Type.GetUserTypeByUserId(user.Id, _BookifyDbContext);
+            if(ut.TypeId == AppConfig.SuperAdminGuid)
+            {
+                List<User_Bookshop> user_Bookshops = User_Bookshop.All(_BookifyDbContext);
+                
+                foreach(var bookshop in user_Bookshops)
+                {
+                    var u = await _UserManager.FindByIdAsync(bookshop.UserId.ToString());
+                    var bs = Bookshop.GetById(bookshop.BookshopId, _BookifyDbContext);
+
+                    bookshop.User = u;
+                    bookshop.Bookshop = bs;
+                }
+
+                return Ok(user_Bookshops);
+            }
+
+            return Unauthorized(new GeneralAuthResponseDto
+            {
+                IsAllowed = false,
+                Errors = new List<string> { "User not allowed for this feature" }
+            });
         }
 
         

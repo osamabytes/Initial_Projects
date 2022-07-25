@@ -7,7 +7,7 @@
     </div>
   </div>
   <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
-    <form>
+    <form #addBookForm="ngForm" (ngSubmit)="AddBook(addBookForm)">
       <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
         General
       </h6>
@@ -21,6 +21,9 @@
               Name
             </label>
             <input
+              id="name"
+              name="name"
+              [(ngModel)]="bookCategoriesDto.Book.Name"
               type="text"
               class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
               placeholder="Enter Book Name"
@@ -36,6 +39,9 @@
               ISBN
             </label>
             <input
+              id="isbn"
+              name="isbn"
+              [(ngModel)]="bookCategoriesDto.Book.ISBN"
               type="text"
               class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
               placeholder="ISBN-xxx-xxx-xxx"
@@ -59,6 +65,9 @@
               Picture 1
             </label>
             <input
+              id="pic1"
+              name="pic1"
+              [(ngModel)]="bookCategoriesDto.Book.Pic1"
               type="file"
               class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
               value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
@@ -74,6 +83,9 @@
                 Picture 2
               </label>
               <input
+                id="pic2"
+                name="pic2"
+                [(ngModel)]="bookCategoriesDto.Book.Pic2"
                 type="file"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
@@ -97,11 +109,39 @@
               Description
             </label>
             <textarea
+              id="description"
+              name="description"
+              [(ngModel)]="bookCategoriesDto.Book.Description"
               type="text"
               class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
               rows="4"
               placeholder="Describe about the Book"
             ></textarea>
+          </div>
+        </div>
+      </div>
+
+      <hr class="mt-6 border-b-1 border-blueGray-300" />
+
+      <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+        Categories
+      </h6>
+      <div class="flex flex-wrap">
+        <div class="w-full lg:w-12/12 px-4">
+          <div class="relative w-full mb-3">
+            <label
+              class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+              htmlFor="grid-password"
+            >
+              Select Categories
+            </label>
+            <ng-multiselect-dropdown
+              [settings]="ddSettings"
+              [data]="ddList"
+              id="categories"
+              name="categories"
+              [(ngModel)]="bookCategoriesDto.Categories"
+            ></ng-multiselect-dropdown>
           </div>
         </div>
       </div>

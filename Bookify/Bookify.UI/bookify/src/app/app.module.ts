@@ -9,6 +9,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NgHttpLoaderModule } from 'ng-http-loader';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 // layouts
 import { AdminComponent } from "./layouts/admin/admin.component";
@@ -122,7 +123,7 @@ import { CreatebookshopComponent } from "./components/cards/card-bookshops/creat
     CreatebookshopComponent
   ],
   imports: [BrowserModule, BrowserAnimationsModule, AppRoutingModule, HttpClientModule, FormsModule, ToastrModule.forRoot(), 
-            NgHttpLoaderModule.forRoot()],
+            NgHttpLoaderModule.forRoot(), NgMultiSelectDropDownModule.forRoot()],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

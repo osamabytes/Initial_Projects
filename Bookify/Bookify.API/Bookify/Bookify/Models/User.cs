@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Bookify.Data;
+using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 
 namespace Bookify.Models
@@ -16,6 +17,15 @@ namespace Bookify.Models
         public User_Bookshop? User_Bookshop { get; set; }
 
         public List<Review>? reviews { get; set; }*/
+
+        // Db Operations
+        public static List<User> All(Guid SuperUid, BookifyDbContext bookifyDbContext)
+        {
+            var users = bookifyDbContext.Users.ToList();
+            // exclude the super user
+            users.RemoveAll(u => u.Id == SuperUid);
+            return users;
+        }
 
     }
 }

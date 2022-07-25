@@ -29,12 +29,24 @@ namespace Bookify.Controllers
 
             var user = await _userManager.FindByEmailAsync(useremail.Value);
 
-
             User_Type ut = User_Type.GetUserTypeByUserId(user.Id, _bookifyDbContext);
 
             if(ut.TypeId == AppConfig.CustomerGuid || ut.TypeId == AppConfig.SuperAdminGuid)
             {
                 List<Book> books = Book.GetAllBooks(_bookifyDbContext);
+                return Ok(books);
+            }
+            else
+            {
+                User_Bookshop? ubs = User_Bookshop.GetByUserId(user.Id, _bookifyDbContext);
+                List<Book_Bookshop> bbs = Book_Bookshop.GetBookbyBookShop(ubs.BookshopId, _bookifyDbContext);
+
+                List<Book> books = new List<Book>();
+                foreach(var bb in bbs)
+                {
+                    books.Add(bb.Book);
+                }
+
                 return Ok(books);
             }
 

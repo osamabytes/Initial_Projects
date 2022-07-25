@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Bookify.Constants;
 using Bookify.Data;
 using Bookify.Dto;
 using Bookify.JwtBearer;
@@ -112,6 +113,37 @@ namespace Bookify.Controllers
             Models.Type type = Models.Type.GetById(ut.TypeId, _bookifyDbContext);
 
             return Ok(type);
+        }
+
+        [HttpGet("AllUsers")]
+        public async Task<IActionResult> AllUsers()
+        {
+            var useremail = User.Claims.FirstOrDefault();
+
+            if (useremail == null)
+                return NotFound();
+
+            var user = await _userManager.FindByEmailAsync(useremail.Value);
+
+            if (user == null)
+                return Unauthorized(new GeneralAuthResponseDto
+                {
+                    IsAllowed = false,
+                    Errors = new List<string> { "User Not Logged In" }
+                });
+
+            User_Type ut = User_Type.GetUserTypeByUserId(user.Id, _bookifyDbContext);
+            if (ut.TypeId == AppConfig.SuperAdminGuid)
+            {
+                var users = Models.User.All(user.Id, _bookifyDbContext);
+                return Ok(users);
+            }
+
+            return Unauthorized(new GeneralAuthResponseDto
+            {
+                IsAllowed = false,
+                Errors = new List<string> { "User not allowed for this feature" }
+            });
         }
     }
 }

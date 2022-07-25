@@ -13,6 +13,21 @@ namespace Bookify.Models
         public Bookshop? BookShop { get; set; }
 
         // Db Operations
+        public static List<Book_Bookshop> GetBookbyBookShop(Guid BookShopUid, BookifyDbContext bookifyDbContext)
+        {
+            var book_bs = bookifyDbContext.Book_Bookshops.Where<Book_Bookshop>(bbs => bbs.BookshopId == BookShopUid);
+
+            var bbs = book_bs.ToList();
+            foreach(var bb in bbs)
+            {
+                if(bb.Book == null)
+                {
+                    bb.Book = Book.GetById(bb.BookId, bookifyDbContext);
+                }
+            }
+
+            return bbs;
+        }
         public async Task Save(BookifyDbContext bookifyDbContext)
         {
             Id = Guid.NewGuid();

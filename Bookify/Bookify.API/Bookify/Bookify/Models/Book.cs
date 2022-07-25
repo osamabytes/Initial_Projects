@@ -26,6 +26,11 @@ namespace Bookify.Models
         */
 
         // Db Operations
+        public static Book? GetById(Guid uid, BookifyDbContext bookifyDbContext)
+        {
+            var book = bookifyDbContext.Books.FirstOrDefault(b => b.Id == uid);
+            return book;
+        }
         public static List<Book> GetAllBooks(BookifyDbContext bookifyDbContext)
         {
             var books = bookifyDbContext.Books.ToList();

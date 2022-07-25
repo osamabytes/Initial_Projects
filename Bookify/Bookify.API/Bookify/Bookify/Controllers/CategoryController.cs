@@ -35,7 +35,7 @@ namespace Bookify.Controllers
             // Get User Type
             User_Type ut = User_Type.GetUserTypeByUserId(user.Id, _bookifyDbContext);
 
-            if(ut.TypeId == AppConfig.SuperAdminGuid)
+            if(ut.TypeId == AppConfig.SuperAdminGuid || ut.TypeId == AppConfig.AdminGuid)
             {
                 List<Category> categories = Category.GetAllCategories(_bookifyDbContext);
                 return Ok(categories);

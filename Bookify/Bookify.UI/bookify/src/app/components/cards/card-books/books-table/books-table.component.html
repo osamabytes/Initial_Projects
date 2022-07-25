@@ -16,7 +16,7 @@
   </div>
   <div class="block w-full overflow-x-auto">
     <!-- Projects table -->
-    <table class="items-center w-full bg-transparent border-collapse">
+    <table *ngIf="books || books.length > 0" class="items-center w-full bg-transparent border-collapse">
       <thead>
         <tr>
           <th
@@ -70,7 +70,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
+        <tr *ngFor="let book of books">
           <th
             class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center"
           >
@@ -78,16 +78,16 @@
               class="ml-3 font-bold"
               [ngClass]="color === 'light' ? 'text-blueGray-600' : 'text-white'"
             >
-              00000000-0000-0000-0000-000000000000
+              {{book.id}}
             </span>
           </th>
           <td
             class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
           >
-            Test
+            {{book.name}}
           </td>
           <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-            ISBN-xxx-xxx-xxx
+            {{book.isbn}}
           </td>
           <td
             class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
@@ -111,5 +111,6 @@
         </tr>
       </tbody>
     </table>
+    <h4 *ngIf="!books || books.length<=0" class="font-semibold text-lg px-4">No Books Available.</h4>
   </div>
 </div>

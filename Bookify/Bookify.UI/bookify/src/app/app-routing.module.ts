@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
+import { CreatebookshopComponent } from "./components/cards/card-bookshops/createbookshop/createbookshop.component";
 
 // layouts
 import { AdminComponent } from "./layouts/admin/admin.component";
@@ -37,6 +38,7 @@ const routes: Routes = [
       { path: "maps", component: MapsComponent },
       { path: "add_category", component: AddCategoryComponent},
       { path: "bookshops", component: ViewAllBookshopsComponent},
+      { path: "createbookshop", component: CreatebookshopComponent},
       { path: "books", component: ViewAllBooksComponent},
       { path: "add_book", component: AddBookComponent},
       { path: "customers", component: ViewAllCustomersComponent},

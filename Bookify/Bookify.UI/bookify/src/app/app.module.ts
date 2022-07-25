@@ -68,6 +68,7 @@ import { CustomersTableComponent } from './components/cards/card-customers/custo
 import { AdminCustomerDropdownComponent } from './components/dropdowns/admin-customer-dropdown/admin-customer-dropdown.component';
 import { FormsModule } from "@angular/forms";
 import { InterceptorService } from "./services/Shared/Network/interceptor.service";
+import { CreatebookshopComponent } from "./components/cards/card-bookshops/createbookshop/createbookshop.component";
 
 @NgModule({
   declarations: [
@@ -118,6 +119,7 @@ import { InterceptorService } from "./services/Shared/Network/interceptor.servic
     AdminBookshopDropdownComponent,
     CustomersTableComponent,
     AdminCustomerDropdownComponent,
+    CreatebookshopComponent
   ],
   imports: [BrowserModule, BrowserAnimationsModule, AppRoutingModule, HttpClientModule, FormsModule, ToastrModule.forRoot(), 
             NgHttpLoaderModule.forRoot()],

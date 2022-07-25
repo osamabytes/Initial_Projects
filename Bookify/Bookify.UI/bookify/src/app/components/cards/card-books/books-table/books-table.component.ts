@@ -1,4 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Book } from 'src/app/models/book.model';
+import { BooksService } from 'src/app/services/books.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-books-table',
@@ -17,9 +20,25 @@ export class BooksTableComponent implements OnInit {
 
   private _color = "light";
 
-  constructor() { }
+  books: Book[] = [];
+
+  constructor(private booksService: BooksService, private toast: ToastrService) { }
 
   ngOnInit(): void {
+    this.booksService.All()
+    .subscribe({
+      next: (response) => {
+        this.books = response;
+        console.log(this.books);
+      },
+      error: (error) => {
+        var errors = error.error.errors;
+
+        errors.forEach(element => {
+          this.toast.error(element, 'Bookify');
+        });
+      }
+    })
   }
 
 }

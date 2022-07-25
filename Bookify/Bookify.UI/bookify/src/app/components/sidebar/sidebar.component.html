@@ -101,7 +101,7 @@
           </a>
         </li>
 
-        <li class="items-center">
+        <li *ngIf="userType.Id == SuperAdminUid" class="items-center">
           <a
             [routerLink]="['add_category']"
             class="text-xs uppercase py-3 font-bold block"
@@ -123,7 +123,7 @@
           </a>
         </li>
 
-        <li class="items-center">
+        <li *ngIf="userType.Id == SuperAdminUid" class="items-center">
           <a
             [routerLink]="['bookshops']"
             class="text-xs uppercase py-3 font-bold block"
@@ -179,7 +179,7 @@
           </a>
         </li>
 
-        <li class="items-center">
+        <li *ngIf="userType.Id == AdminUid" class="items-center">
           <a
             [routerLink]="['add_book']"
             class="text-xs uppercase py-3 font-bold block"
@@ -207,13 +207,16 @@
       <!-- Heading -->
       <h6
         class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
+        *ngIf="userType.Id == SuperAdminUid || userType.Id == AdminUid"
       >
         Customers
       </h6>
       <!-- Navigation -->
 
-      <ul class="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
-        <li class="items-center">
+      <ul 
+        *ngIf="userType.Id == SuperAdminUid || userType.Id == AdminUid"
+        class="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
+        <li *ngIf="userType.Id == SuperAdminUid" class="items-center">
           <a
             [routerLink]="['customers']"
             class="text-xs uppercase py-3 font-bold block"
@@ -235,6 +238,7 @@
           </a>
         </li>
       </ul>
+
     </div>
   </div>
 </nav>

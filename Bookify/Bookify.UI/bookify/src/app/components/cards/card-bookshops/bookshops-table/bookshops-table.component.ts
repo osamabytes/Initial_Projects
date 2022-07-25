@@ -1,4 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { UserBookShop } from 'src/app/models/User_BookShop.model';
+import { BookshopsService } from 'src/app/services/bookshops.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-bookshops-table',
@@ -16,10 +19,26 @@ export class BookshopsTableComponent implements OnInit {
   }
 
   private _color = "light";
+
+  bookshops: UserBookShop[] = [];
   
-  constructor() { }
+  constructor(private bookshopService: BookshopsService, private toast: ToastrService) { }
 
   ngOnInit(): void {
+    this.bookshopService.All()
+    .subscribe({
+      next: (response) => {
+        this.bookshops = response;
+        console.log(this.bookshops);
+      },
+      error: (error) => {
+        var errors = error.error.errors;
+
+        errors.forEach(element => {
+          this.toast.error(element, 'Bookify');
+        });
+      }
+    })
   }
 
 }

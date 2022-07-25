@@ -6,6 +6,7 @@ import {ToastrService} from 'ngx-toastr';
 import { NgForm } from "@angular/forms";
 import { StorageService } from "src/app/services/Shared/storage.service";
 import { Router } from "@angular/router";
+import { $ } from "protractor";
 
 @Component({
   selector: "app-login",
@@ -25,6 +26,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   Login(login: NgForm){
+    
     this.authentication.loginUser('api/users/Login', this.UserAuth)
     .subscribe({
       next: (response: any) => {
@@ -69,6 +71,9 @@ export class LoginComponent implements OnInit {
             this.passwordError = "";
           }
         }
+      },
+      complete: () => {
+
       }
      })
   }

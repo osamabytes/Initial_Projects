@@ -32,5 +32,13 @@ namespace Bookify.Models
             await bookifyDbContext.Bookshops.AddAsync(this);
             await bookifyDbContext.SaveChangesAsync();
         }
+
+        public async Task Update(BookifyDbContext bookifyDbContext)
+        {
+            var bookShop = bookifyDbContext.Bookshops.FirstOrDefault(bs => bs.Id == this.Id);
+            bookShop.Name = this.Name;
+
+            await bookifyDbContext.SaveChangesAsync();
+        }
     }
 }

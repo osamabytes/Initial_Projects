@@ -13,17 +13,24 @@ namespace Bookify.Models
         public Bookshop? Bookshop { get; set; }
 
         // Db Operations
+
         public static List<User_Bookshop> All(BookifyDbContext bookifyDbContext)
         {
             var bookshops = bookifyDbContext.User_Bookshops.ToList();
             return bookshops;
         }
-        public static User_Bookshop GetByUserId(Guid UserId, BookifyDbContext bookifyDbContext)
+        public static User_Bookshop? GetByUserId(Guid UserId, BookifyDbContext bookifyDbContext)
         {
             var ub = bookifyDbContext.User_Bookshops.FirstOrDefault(ub => ub.UserId == UserId);
 
             if (ub == null)
                 return null;
+
+            if(ub?.Bookshop == null)
+            {
+                Bookshop? bookshop = Bookshop.GetById(ub.BookshopId, bookifyDbContext);
+                ub.Bookshop = bookshop;
+            }
 
             return ub;
         }

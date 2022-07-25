@@ -62,6 +62,35 @@ namespace Bookify.Controllers
             });
         }
 
+        [HttpGet("UserBookShop")]
+        public async Task<IActionResult> GetBookShop()
+        {
+            var useremail = User.Claims.FirstOrDefault();
+            if (useremail == null)
+                return NotFound();
+
+            var user = await _UserManager.FindByEmailAsync(useremail.Value);
+
+            if (user == null)
+                return Unauthorized(new GeneralAuthResponseDto
+                {
+                    IsAllowed = false,
+                    Errors = new List<string> { "User Not Logged In" }
+                });
+
+            User_Type ut = User_Type.GetUserTypeByUserId(user.Id, _BookifyDbContext);
+            if (ut.TypeId == AppConfig.AdminGuid)
+            {
+                User_Bookshop? bookShop = User_Bookshop.GetByUserId(user.Id, _BookifyDbContext);
+                return Ok(bookShop);
+            }
+
+            return Unauthorized(new GeneralAuthResponseDto
+            {
+                IsAllowed = false,
+                Errors = new List<string> { "User not allowed for this feature" }
+            });
+        }
         
         [HttpPost]
         public async Task<IActionResult> AddBookshop([FromBody] Bookshop bookshop)
@@ -79,13 +108,22 @@ namespace Bookify.Controllers
                 Bookshop bs = new Bookshop();
                 bs.Name = bookshop.Name;
 
-                await bs.Save(_BookifyDbContext);
+                if (bookshop.Id != Guid.Empty)
+                {
+                    bs.Id = bookshop.Id;
 
-                User_Bookshop user_Bookshop = new User_Bookshop();
-                user_Bookshop.UserId = user.Id;
-                user_Bookshop.BookshopId = bs.Id;
+                    await bs.Update(_BookifyDbContext);
+                }
+                else
+                {
+                    await bs.Save(_BookifyDbContext);
 
-                await user_Bookshop.Save(_BookifyDbContext);
+                    User_Bookshop user_Bookshop = new User_Bookshop();
+                    user_Bookshop.UserId = user.Id;
+                    user_Bookshop.BookshopId = bs.Id;
+
+                    await user_Bookshop.Save(_BookifyDbContext);
+                }
 
                 return Ok(bs);
             }

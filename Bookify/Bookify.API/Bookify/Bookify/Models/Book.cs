@@ -26,6 +26,11 @@ namespace Bookify.Models
         */
 
         // Db Operations
+        public static List<Book> GetAllBooks(BookifyDbContext bookifyDbContext)
+        {
+            var books = bookifyDbContext.Books.ToList();
+            return books;
+        }
         public static Book GetbyISBN(string? ISBN, BookifyDbContext bookifyDbContext)
         {
             var book = bookifyDbContext.Books.FirstOrDefault(b => b.ISBN == ISBN);

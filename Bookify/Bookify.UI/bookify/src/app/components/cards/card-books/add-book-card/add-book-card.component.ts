@@ -23,7 +23,9 @@ export class AddBookCardComponent implements OnInit {
       Pic1: '',
       Pic2: ''
     },
-    Categories: []
+    Categories: [],
+    // Image1: null,
+    // Image2: null,
   }
 
   ddList = [];
@@ -31,6 +33,9 @@ export class AddBookCardComponent implements OnInit {
     idField: 'id',
     textField: 'name'
   };
+
+  image1: File = null;
+  image2: File = null;
 
   constructor(private bookService: BooksService, private categoryService: CategoryService, private toast: ToastrService) { }
 
@@ -50,21 +55,46 @@ export class AddBookCardComponent implements OnInit {
     })
   }
 
+  handleUploadImage(event){
+    var elementId = event.target.id;
+
+    if(elementId == 'pic1'){
+      this.image1 = event.target.files[0];
+    }else{
+      this.image2 = event.target.files[0];
+    }
+  }
+
   AddBook(addbookform: NgForm){
+
+    // Add the images name to the recpective model variables
+    if(this.image1 != null){
+      this.bookCategoriesDto.Book.Pic1 = this.image1.name;
+      // this.bookCategoriesDto.Image1 = this.image1;
+    }
+
+    if(this.image2 != null){
+      this.bookCategoriesDto.Book.Pic2 = this.image2.name;
+      // this.bookCategoriesDto.Image2 = this.image2;
+    }
+
     this.bookService.AddBook(this.bookCategoriesDto)
     .subscribe({
       next: (response) => {
         addbookform.reset();
-
         this.toast.success('Book Added Successfully', 'Bookify');
       },
       error: (error) => {
         var errors = error.error.errors;
 
-        errors.forEach(element => {
-          this.toast.error(element, 'Bookify');
-        });
+        if(errors !== undefined){
+          errors.forEach(element => {
+            this.toast.error(element, 'Bookify');
+          });
+        }
+
+        console.log(error);
       }
-    })
+    });
   }
 }

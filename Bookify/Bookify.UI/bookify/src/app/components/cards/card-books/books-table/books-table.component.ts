@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Book } from 'src/app/models/book.model';
 import { BooksService } from 'src/app/services/books.service';
 import {ToastrService} from 'ngx-toastr';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-books-table',
@@ -21,13 +22,30 @@ export class BooksTableComponent implements OnInit {
   private _color = "light";
 
   books: Book[] = [];
+  baseUrl: string = environment.baseUrl;
 
   constructor(private booksService: BooksService, private toast: ToastrService) { }
 
   ngOnInit(): void {
     this.booksService.All()
     .subscribe({
-      next: (response) => {
+      next: (response: any) => {
+
+        response.forEach(row => {
+          // setting the image path
+          if(row.pic1 != ''){
+            row.pic1 = this.baseUrl + `uploads/${row.pic1}`;
+          }else{
+            row.pic1 = this.baseUrl + `uploads/default.png`;
+          }
+
+          if(row.pic2 != ''){
+            row.pic2 = this.baseUrl + `uploads/${row.pic2}`;
+          }else{
+            row.pic2 = this.baseUrl + `uploads/default.png`;
+          }
+        });
+
         this.books = response;
         console.log(this.books);
       },

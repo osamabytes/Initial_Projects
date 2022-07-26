@@ -17,7 +17,7 @@ export class BooksService {
     return this.http.get<Book[]>(this.baseUrl + "api/Book");
   }
 
-  public AddBook(body: BookCategoriesDto){
+  public AddBook(body: FormData){
     return this.http.post<BookCategoriesDto>(this.baseUrl + "api/Book", body);
   }
 }

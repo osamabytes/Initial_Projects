@@ -24,14 +24,16 @@ export class AddBookCardComponent implements OnInit {
       Pic2: ''
     },
     Categories: [],
-    // Image1: null,
-    // Image2: null,
+    Image1: null,
+    Image2: null,
   }
 
   ddList = [];
+  selectedItems = [];
   ddSettings: IDropdownSettings = {
     idField: 'id',
-    textField: 'name'
+    textField: 'name',
+    allowSearchFilter: true
   };
 
   image1: File = null;
@@ -59,9 +61,9 @@ export class AddBookCardComponent implements OnInit {
     var elementId = event.target.id;
 
     if(elementId == 'pic1'){
-      this.image1 = event.target.files[0];
+      this.image1 = <File>event.target.files[0];
     }else{
-      this.image2 = event.target.files[0];
+      this.image2 = <File>event.target.files[0];
     }
   }
 
@@ -70,27 +72,44 @@ export class AddBookCardComponent implements OnInit {
     // Add the images name to the recpective model variables
     if(this.image1 != null){
       this.bookCategoriesDto.Book.Pic1 = this.image1.name;
-      // this.bookCategoriesDto.Image1 = this.image1;
+      this.bookCategoriesDto.Image1 = this.image1;
     }
 
     if(this.image2 != null){
       this.bookCategoriesDto.Book.Pic2 = this.image2.name;
-      // this.bookCategoriesDto.Image2 = this.image2;
+      this.bookCategoriesDto.Image2 = this.image2;
     }
 
-    this.bookService.AddBook(this.bookCategoriesDto)
+    this.selectedItems.forEach(item => {
+      this.bookCategoriesDto.Categories.push({
+        Id: item.id,
+        Name: item.name,
+        Description: ''
+      })
+    });
+
+    const formData = new FormData();
+    formData.append('Book', JSON.stringify(this.bookCategoriesDto.Book));
+    formData.append('Categories', JSON.stringify(this.bookCategoriesDto.Categories));
+    formData.append('Image1', this.bookCategoriesDto.Image1);
+    formData.append('Image2', this.bookCategoriesDto.Image2);
+
+    this.bookService.AddBook(formData)
     .subscribe({
       next: (response) => {
         addbookform.reset();
         this.toast.success('Book Added Successfully', 'Bookify');
       },
       error: (error) => {
-        var errors = error.error.errors;
-
-        if(errors !== undefined){
+        if(error.error.hasOwnProperty('errors')){
+          var errors = error.error.errors;
           errors.forEach(element => {
             this.toast.error(element, 'Bookify');
           });
+        }
+
+        if(error.status == 500){
+          this.toast.error("Internal Server Error", 'Bookify');
         }
 
         console.log(error);

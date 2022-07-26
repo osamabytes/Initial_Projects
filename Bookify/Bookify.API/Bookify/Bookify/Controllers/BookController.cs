@@ -1,6 +1,7 @@
 ﻿using Bookify.Constants;
 using Bookify.Data;
 using Bookify.Dto;
+using Bookify.Helper;
 using Bookify.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -57,9 +58,10 @@ namespace Bookify.Controllers
             });
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddBook([FromBody] BookCategoriesDto bookCategoriesDto)
+        [HttpPost, DisableRequestSizeLimit]
+        public async Task<IActionResult> AddBook()
         {
+
             var useremail = User.Claims.FirstOrDefault();
             if (useremail == null)
                 return NotFound();
@@ -71,6 +73,19 @@ namespace Bookify.Controllers
 
             if(ut.TypeId == AppConfig.AdminGuid)
             {
+                var formCollection = await Request.ReadFormAsync();
+                var bks = formCollection["Book"];
+                var cs = formCollection["Categories"];
+                var image1 = formCollection.Files["Image1"];
+                var image2 = formCollection.Files["Image2"];
+
+                BookCategoriesDto bookCategoriesDto = new BookCategoriesDto();
+
+                // desearlize the jsoncontent
+                bookCategoriesDto.Book = JsonHelper.DesearlizeBook(bks);
+                bookCategoriesDto.Categories = JsonHelper.DesearlizeCategories(cs);
+                bookCategoriesDto.Image1 = image1;
+                bookCategoriesDto.Image2 = image2;
 
                 var book = bookCategoriesDto.Book;
                 var categories = bookCategoriesDto.Categories;
@@ -108,6 +123,13 @@ namespace Bookify.Controllers
                 bbs.BookshopId = ub.BookshopId;
 
                 await bbs.Save(_bookifyDbContext);
+
+                // Copy the uploaded images to the folder
+                if(image1 != null)
+                    SaveImage.Save(bookCategoriesDto.Image1);
+
+                if (image2 != null)
+                    SaveImage.Save(bookCategoriesDto.Image2);
 
                 return Ok(b);
             }

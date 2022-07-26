@@ -1,4 +1,4 @@
-using AutoMapper;
+ using AutoMapper;
 using Bookify.Data;
 using Bookify.JwtBearer;
 using Bookify.Mapper;
@@ -6,6 +6,7 @@ using Bookify.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -68,6 +69,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// configure the static files path for the images
+app.UseFileServer(new FileServerOptions
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "uploads")),
+    RequestPath = "/uploads"
+});
 
 app.UseHttpsRedirection();
 
